@@ -1,0 +1,4 @@
+---
+import media from '../data/media.json';
+---
+<section class="section media-section" id="media"><div class="wrap"><div class="section-head"><div><span class="eyebrow green">MEDIA PARTNERS</span><h2>合作媒体</h2><p class="section-intro">链接会展与餐饮行业传播渠道。</p></div><a class="text-link" href="/media/">查看合作媒体 ↗</a></div><div class="media-wall">{media.map(item=><a class="media-tile" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.name+'（新窗口打开）'}><img src={item.image} alt={item.name} width="200" height="80" loading="lazy"/></a>)}</div></div></section>

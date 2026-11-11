@@ -1,0 +1,7 @@
+---
+import Article from '../../layouts/Article.astro';
+import articles from '../../data/archive.json';
+export function getStaticPaths(){return articles.map(article=>({params:{id:article.id},props:{article}}));}
+const {article}=Astro.props;
+---
+<Article title={article.title} description="原官网历史资讯存档，文中日期与活动属于发布时信息。" label="NEWS ARCHIVE"><p class="source-note">历史资讯存档 · 文中日期、活动与数据为原文发布时信息。</p>{article.paragraphs.map(text=><p>{text}</p>)}<a class="text-link" href="/industry/">返回行业动态 →</a></Article>

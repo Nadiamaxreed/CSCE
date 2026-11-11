@@ -1,0 +1,5 @@
+---
+import Article from '../layouts/Article.astro';
+import news from '../data/news.json';
+---
+<Article title="展会新闻" description="展会公告、筹备资讯与往届消息。" label="EXPO NEWS"><div class="news-tabs"><a href="/news/">展会新闻</a><a href="/industry/">行业动态</a></div><div class="news-list">{news.exhibition.map(item=><article><span class="eyebrow green">{item.date || '原官网发布'}</span><h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2><p>阅读原文 · 历史消息请留意文中届次与日期</p></article>)}</div></Article>

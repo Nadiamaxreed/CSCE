@@ -1,0 +1,5 @@
+---
+import Article from '../layouts/Article.astro';
+import brands from '../data/brands.json';
+---
+<Article title="参展品牌" description="汇聚餐饮食材、调味品与供应链品牌，查看往届品牌展示。" label="EXHIBITING BRANDS"><div class="brand-wall">{brands.map(brand=><div class="brand-tile"><img src={brand.image} alt={brand.name} width="91" height="91" loading="lazy"/></div>)}</div><p class="note">原官网品牌展示资料，作为往届回顾；2027届参展名单以组委会公布为准。</p><a class="button green-button" href="/exhibit/">了解参展服务 ↗</a></Article>

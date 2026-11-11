@@ -1,0 +1,8 @@
+---
+import Article from '../layouts/Article.astro';
+import {categories} from '../data/event';
+
+---
+<Article title="九大展品范围" description="围绕餐饮选品与经营需求，从食材、调味到后厨加工包装，提前规划您的采购方向。" label="PRODUCT CATEGORIES">
+<p class="lead">按需求找品类，把逛展时间用在关键选择上。</p><div class="product-list">{categories.map(([name,tag,desc],i)=><section id={'category-'+(i+1)}><span class="category-no">{String(i+1).padStart(2,'0')}</span><div><h2>{name}</h2><h3>{tag}</h3><p>{desc}</p></div><a class="text-link" href="/exhibit/">该品类参展咨询 ↗</a></section>)}</div><p class="note">分类依据原官网参展范围图片整理，文字为内容重组。具体参展品牌与展品以组委会公布及现场为准。</p>
+</Article>

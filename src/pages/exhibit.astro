@@ -1,0 +1,8 @@
+---
+import Article from '../layouts/Article.astro';
+import {event} from '../data/event';
+
+---
+<Article title="展位预订，直接联系客服" description="从参展需求到展位确认，由客服协助沟通，全站不设置展位申请表单。" label="FOR EXHIBITORS">
+<div class="editorial-grid"><div><h2>把产品带到济南，把合作带向市场</h2><p>如果您希望展示餐饮食材、调味品、饮品或餐饮设备，欢迎先与客服沟通产品类别及参展需求，了解适合的展示方式。</p><ol class="steps"><li><b>联系展会客服</b><p>拨打{event.phone}，说明企业名称、主营品类和希望参展的方向。</p></li><li><b>沟通展位方案</b><p>由客服介绍可选位置、面积、展位类型及费用。网站不预设价格，最终以组委会确认的方案为准。</p></li><li><b>确认参展事项</b><p>与组委会核对合同、付款及参展资料要求，按正式通知办理。</p></li><li><b>准备现场展示</b><p>根据后续参展通知安排展品、物流、搭建和工作人员行程。</p></li></ol><h2 id="fees">参展费用与展位类型</h2><p>可咨询标准展位、精装展位和特装光地等参展方式。具体面积、配置及2027届报价请联系组委会确认，特装搭建与用电等配套事项请一并沟通。</p><h2>咨询前准备好这些信息</h2><p>您的主营产品、意向展位面积、展示或试吃需求，以及联系人信息，有助于客服更快了解您的计划。涉及现场用电、用水、冷藏或特装搭建的需求，请提前沟通。</p></div><aside class="aside" id="booking"><span class="eyebrow green">BOOTH ENQUIRY</span><h3>展位预订 / 商务合作</h3><span class="phone">{event.phone}</span><p>展位位置、费用、推广合作及参展资料，直接联系展会客服。</p><a class="button green-button" href="/contact/">查看客服联系方式 ↗</a><img class="qr large" src="/images/wechat.webp" alt="官方微信公众号二维码" width="160" height="160"/><p>关注官方微信公众号了解展会信息</p></aside></div>
+</Article>

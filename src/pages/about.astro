@@ -1,0 +1,8 @@
+---
+import Article from '../layouts/Article.astro';
+import {event,faqs} from '../data/event';
+
+---
+<Article title="关于济南餐博会" description="立足山东，聚焦餐饮供应链，为餐饮选品与产业合作提供面对面交流的平台。" label="ABOUT THE EXPO">
+<div class="editorial-grid"><div><h2>一场围绕餐饮生意的相聚</h2><p>海名·济南餐博会依托山东餐饮与食品产业基础，面向餐饮企业、食材经销代理商与供应链伙伴，覆盖食材、调味品、酒水饮品以及餐饮设备和加工包装等方向。</p><p>2027第13届展会关注餐饮口味创新、品牌发展及供应链建设，帮助参展企业展示产品，也让采购商在现场比较产品、了解应用和交流合作条件。</p><h2>2027展会信息</h2><dl><dt>展会名称</dt><dd>{event.name}</dd><dt>展会时间</dt><dd>{event.date}</dd><dt>展会地点</dt><dd>{event.venue}</dd><dt>展馆地址</dt><dd>{event.address}</dd><dt>联系单位</dt><dd>{event.company}</dd></dl><p class="note">具体开放时间、展馆分布及活动日程以组委会后续发布为准。</p></div><aside class="aside"><span class="eyebrow green">MAKE CONNECTIONS</span><h3>来这里做什么？</h3><p>找食材：比较品类、口味与应用。</p><p>找伙伴：沟通供应能力与合作条件。</p><p>看配套：了解后厨与加工包装方案。</p><a class="button green-button" href="/categories/">探索展品范围 ↗</a></aside></div><section id="faq"><h2>常见问题</h2>{faqs.map(([q,a])=><details><summary>{q}</summary><p>{a}</p></details>)}</section>
+</Article>

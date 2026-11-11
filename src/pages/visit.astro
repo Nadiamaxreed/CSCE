@@ -1,0 +1,8 @@
+---
+import Article from '../layouts/Article.astro';
+import {event} from '../data/event';
+
+---
+<Article title="参观指南" description="带着采购需求来济南：了解展品范围、准备采购清单、提前规划行程。" label="FOR VISITORS">
+<div class="editorial-grid"><div><h2>2027年5月13—15日，山东国际会展中心见</h2><p>无论是餐饮门店选品、渠道采购，还是厨房设备升级，都可以先从自己的经营需求出发，安排参观重点。</p><h2>三步准备，高效逛展</h2><ol class="steps"><li><b>列出采购清单</b><p>明确产品品类、应用场景及希望了解的供应条件，提前浏览九大展品范围。</p></li><li><b>完成参观登记</b><p>点击参观登记，前往海名集团登记系统，按页面提示填写并提交信息。入场证件与参观安排以登记系统及组委会通知为准。</p></li><li><b>安排到馆路线</b><p>展馆位于济南市槐荫区日照路1号，可通过地铁2号线二环西路站衔接步行到馆。</p></li></ol><a class="button green-button" href="/travel/">查看交通指南 ↗</a><h2>现场洽谈可以重点了解什么？</h2><p>建议结合实际业务，与供应商核对产品规格、储存条件、配送范围、起订要求与售后安排，记录产品信息以便后续比较。</p><p class="note">开放时段、入场政策和最终展商名单以组委会发布为准。</p></div><aside class="aside"><span class="eyebrow green">VISITOR SERVICE</span><h3>参观咨询</h3><span class="phone">{event.visitorPhone}</span><p>前往海名集团登记系统完成参观登记。</p><a class="button green-button" href={event.registration} target="_blank" rel="noopener noreferrer">参观登记 ↗</a></aside></div>
+</Article>

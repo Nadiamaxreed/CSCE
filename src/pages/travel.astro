@@ -1,0 +1,8 @@
+---
+import Article from '../layouts/Article.astro';
+import {event} from '../data/event';
+
+---
+<Article title="交通与到馆指南" description="山东国际会展中心 · 济南市槐荫区日照路1号。提前选择交通方式，出发时结合实时导航安排行程。" label="GETTING HERE">
+<div class="venue-panel"><div><span class="eyebrow">YOUR DESTINATION</span><h2>{event.venue}</h2><p>{event.address}</p><a class="button lime" href="https://uri.amap.com/search?keyword=山东国际会展中心&city=济南" target="_blank" rel="noopener noreferrer">高德地图导航 ↗</a><a class="button outline" href="https://api.map.baidu.com/geocoder?address=济南市槐荫区日照路1号山东国际会展中心&output=html&src=hmjncbh" target="_blank" rel="noopener noreferrer">百度地图 ↗</a></div><div class="route-art" aria-label="换乘示意，非地理地图"><span>济南西站 · 1号线</span><b>↓ 王府庄换乘</b><strong>2号线 → 二环西路站</strong><b>↓ 步行</b><span>山东国际会展中心</span><small>换乘示意 · 非地理地图</small></div></div><div class="travel-grid"><section><span class="category-no">01 / METRO</span><h2>市内地铁</h2><p>乘坐济南地铁2号线至二环西路站，出站后步行到展馆。出入口及步行路线请以实时地图和现场指引为准。</p></section><section><span class="category-no">02 / RAILWAY</span><h2>高铁与火车</h2><p>济南西站：1号线至王府庄站，换乘2号线至二环西路站。</p><p>济南站：前往济南站北地铁站，乘2号线至二环西路站。</p><p>济南东站：3号线至八涧堡站，换乘2号线至二环西路站。</p></section><section><span class="category-no">03 / AIRPORT</span><h2>遥墙国际机场</h2><p>可结合航班到达时间选择地铁或出租车。轨道交通3号线已延伸至遥墙机场方向，可按现场指引乘3号线至八涧堡站，换乘2号线至二环西路站。</p><p>末班车与航班衔接情况，请在出发前查询实时运营信息。</p></section><section><span class="category-no">04 / DRIVING</span><h2>自驾与出租车</h2><p>导航目的地请填写“山东国际会展中心（日照路1号）”。到馆后按现场指引进入停车区域或下客点，展期停车与通行安排以现场管理为准。</p></section></div><h2 id="hotels">住宿怎么安排？</h2><p>可按预算和交通方式，在济南西站、张庄路或展馆周边自行查询酒店。预订前核对位置、退改规则和到馆路线。</p><div class="source-note">交通参考：<a href={event.transportSource} target="_blank" rel="noopener noreferrer">山东国际会展中心官方交通信息 ↗</a>。</div>
+</Article>

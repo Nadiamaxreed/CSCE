@@ -1,0 +1,6 @@
+---
+import Article from '../layouts/Article.astro';
+import media from '../data/media.json';
+import {event} from '../data/event';
+---
+<Article title="合作媒体" description="会展与餐饮行业传播资源，延续原官网合作媒体展示。" label="MEDIA PARTNERS"><div class="media-wall">{media.map(item=><a class="media-tile" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.name+'（新窗口打开）'}><img src={item.image} alt={item.name} width="200" height="80" loading="lazy"/></a>)}</div><p class="note">媒体标识沿用原官网展示资料。</p><h2>媒体与宣传合作</h2><p>合作事项请联系组委会：<span>{event.phone}</span>。</p></Article>

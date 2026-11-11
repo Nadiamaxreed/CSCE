@@ -1,0 +1,5 @@
+---
+import Article from '../layouts/Article.astro';
+import {event} from '../data/event';
+---
+<Article title="展会日程" description="2027年5月13—15日，山东国际会展中心。" label="EXHIBITION SCHEDULE"><dl><dt>展览日期</dt><dd>{event.date}</dd><dt>展会地点</dt><dd>{event.venue}</dd><dt>展馆地址</dt><dd>{event.address}</dd></dl><h2>参展商行程</h2><p>布展、展品进场、搭建与撤展安排，请以2027届参展通知为准。客服可协助核对相关资料及行程事项。</p><h2>观众行程</h2><p>参观开放时段与入场要求，请在出发前查看组委会最新通知，或联系参观客服了解安排。</p><div class="contact-cards"><section><h3>参展咨询</h3><span class="phone">{event.phone}</span></section><section><h3>参观咨询</h3><span class="phone">{event.visitorPhone}</span></section></div></Article>

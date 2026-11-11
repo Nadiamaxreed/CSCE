@@ -1,0 +1,4 @@
+---
+import brands from '../data/brands.json';
+---
+<section class="section brand-section" id="brands"><div class="wrap"><div class="section-head"><div><span class="eyebrow green">EXHIBITING BRANDS</span><h2>参展品牌</h2><p class="section-intro">汇聚餐饮供应链品牌，发现更丰富的产品选择。</p></div><a class="text-link" href="/brands/">查看品牌展示 ↗</a></div><div class="brand-wall">{brands.map(brand=><div class="brand-tile"><img src={brand.image} alt={brand.name} width="91" height="91" loading="lazy"/></div>)}</div><p class="note">往届品牌展示 · 2027届参展名单以组委会公布为准。</p></div></section>

@@ -1,0 +1,8 @@
+---
+import Article from '../layouts/Article.astro';
+import {event} from '../data/event';
+
+---
+<Article title="联系组委会" description="参展、参观与合作咨询，请按需求直接联系对应客服。" label="CONTACT US">
+<div class="contact-cards"><section><span class="eyebrow green">EXHIBITION & PARTNERSHIP</span><h2>参展与媒体合作</h2><span class="phone">{event.phone}</span><p>展位预订、参展费用、宣传推广、商务及媒体合作。</p></section><section><span class="eyebrow green">VISITOR SERVICE</span><h2>参观咨询</h2><span class="phone">{event.visitorPhone}</span><p>参观安排、登记及到馆事项。</p><a class="button green-button" href={event.registration} target="_blank" rel="noopener noreferrer">参观登记 ↗</a></section></div><div class="editorial-grid"><div><h2>{event.company}</h2><p>办公地址：{event.office}</p><p>展会地点：{event.venue}（{event.address}）</p><p>展会时间：{event.date}</p><a class="text-link" href="/travel/">查看展馆交通 ↗</a></div><figure><img class="qr large" src="/images/wechat.webp" width="160" height="160" alt="原官网官方微信公众号二维码"/><figcaption>官方微信公众号 · 沿用原官网提供的二维码</figcaption></figure></div>
+</Article>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://csce.hm-d.cn/sitemap-index.xml

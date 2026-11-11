@@ -1,0 +1,55 @@
+[
+  {
+    "name": "range",
+    "url": "https://www.hmjncbh.com/uploads/ueditor/20230529/102-230529110145510.jpg",
+    "size": [
+      1181,
+      431
+    ]
+  },
+  {
+    "name": "overview",
+    "url": "https://www.hmjncbh.com/uploads/ueditor/20230529/102-230529134046296.png",
+    "size": [
+      1800,
+      2475
+    ]
+  },
+  {
+    "name": "scene-1",
+    "url": "https://www.hmjncbh.com/uploads/allimg/20230529/102-23052Z95G1637.JPG",
+    "size": [
+      1800,
+      1197
+    ]
+  },
+  {
+    "name": "scene-2",
+    "url": "https://www.hmjncbh.com/uploads/allimg/20230529/102-23052Z95401155.JPG",
+    "size": [
+      1800,
+      1202
+    ]
+  },
+  {
+    "name": "scene-3",
+    "url": "https://www.hmjncbh.com/uploads/allimg/20240118/102-24011Q43954c7.jpg",
+    "size": [
+      1800,
+      1012
+    ]
+  },
+  {
+    "name": "wechat",
+    "url": "https://www.hmjncbh.com/uploads/allimg/20230526/102-230526151Gc23.jpg",
+    "size": [
+      258,
+      258
+    ]
+  },
+  {
+    "name": "CSCE JN标识",
+    "url": "https://www.hmjncbh.com/uploads/allimg/20261014/102-261014135001610.jpg",
+    "use": "原站标识左侧裁剪为页头标识；JN部分裁剪为favicon"
+  }
+]

@@ -1,0 +1,6 @@
+---
+import Base from './Base.astro';
+interface Props {title:string;description:string;label:string;}
+const {title,description,label}=Astro.props;
+---
+<Base title={title} description={description}><section class="page-title"><div class="wrap"><a class="breadcrumb" href="/">首页 /</a><span class="eyebrow green">{label}</span><h1>{title}</h1><p>{description}</p></div></section><div class="wrap article"><slot/></div></Base>

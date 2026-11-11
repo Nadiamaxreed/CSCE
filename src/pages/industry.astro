@@ -1,0 +1,5 @@
+---
+import Article from '../layouts/Article.astro';
+import news from '../data/news.json';
+---
+<Article title="行业动态" description="餐饮供应链行业资讯与市场观察。" label="INDUSTRY NEWS"><div class="news-tabs"><a href="/news/">展会新闻</a><a href="/industry/">行业动态</a></div><div class="news-list">{news.industry.map(item=><article><span class="eyebrow green">{item.date || '原官网发布'}</span><h2><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title} ↗</a></h2><p>阅读原文 · 历史消息请留意文中届次与日期</p></article>)}</div></Article>

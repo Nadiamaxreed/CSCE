@@ -1,0 +1,5 @@
+---
+import Article from '../layouts/Article.astro';
+const activities=[['鲁菜美食文化节','以鲁菜文化、美食展示与行业交流为主题的活动。'],['专场路演','围绕产品与品牌展示，开展面对面交流。'],['行业论坛','分享餐饮行业观点与经营思考。'],['培训考察','围绕行业学习与业务交流展开活动。']];
+---
+<Article title="同期活动" description="回顾原官网展示的文化交流、产品路演与行业交流活动。" label="CONCURRENT EVENTS"><p class="lead">在产品之外，交流餐饮经营与产业的新思路。</p><p>以下为往届活动方向回顾；2027届活动时间、嘉宾及参与方式以组委会后续发布为准。</p><div class="event-grid">{activities.map((item,i)=><section><img src={'/images/activity-'+(i+1)+'.webp'} alt={'往届活动：'+item[0]} width="600" height="400" loading="lazy"/><div><span class="eyebrow green">往届活动</span><h2>{item[0]}</h2><p>{item[1]}</p></div></section>)}</div></Article>
