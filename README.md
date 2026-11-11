@@ -1,31 +1,120 @@
-# 海名·济南餐博会官网
+# CSCE · 济南餐博会官网
 
-独立项目：F:\信展官网\济南餐博会\官网项目。正式网站：https://csce.hm-d.cn 。未改动沈阳官网及展商展品分支。沿用既有 Astro 静态站、事实有来源、不制作假表单、发布前验收、备份与回滚的约定。
+济南餐博会的独立展会官网，提供展会介绍、展品范围、参展参观指引、活动资讯、往届回顾、参展品牌及合作媒体等内容。观众通过外部登记系统报名，展位预订直接联系工作人员。
 
-## 使用
+源码镜像：[GitHub](https://github.com/Nadiamaxreed/CSCE) · [Gitee](https://gitee.com/nadia20109/csce)。
 
-Node.js 22.12+。首次运行 `npm ci`，随后 `npm run dev`，本地 http://127.0.0.1:4326/ 。
-`npm run typecheck` 检查类型；`npm run build` 生成 dist。部署时仅上传 dist 内容。
+## 架构与运行方式
 
-## 内容维护
+项目采用独立代码库、Astro 静态多页架构。页面正文在构建阶段生成，浏览器直接读取 HTML、CSS、JavaScript 和图片；无数据库、账户系统或常驻 Node.js 后端。内容更新通过修改源码数据、重新构建和发布完成，当前没有在线内容管理后台。
 
-- 基础信息、电话、展品范围、FAQ：src/data/event.ts。
-- 页面：src/pages；共享导航、SEO 和结构化数据：src/layouts/Base.astro；样式：src/styles/global.css。
-- 图片本地存储在 public/images；原始来源见 docs/图片来源.json。
-- 观众登记已按用户指定URL统一接入，唯一配置源为 src/data/event.ts 的 event.registration，保留全部参数与 #/index。
-- 新闻恢复旧站50条展会资讯与5条行业动态；微信保留外链，可读站内历史文章文字整理为archive页面。菜单与素材取舍见 docs/菜单与首页调整记录.md。
+```text
+src/data 内容数据 + public 图片素材
+                 ↓
+Astro 文件路由 → 页面 / 组件 / 公共布局 / 样式
+                 ↓ npm run build
+dist/ 静态产物 → 静态 Web 服务 → 浏览器
+```
 
-## SEO / GEO
+四个官网采用相同的 Astro 静态生成基础，但不是共享包或统一工作区。各仓库独立管理数据、页面、素材、锁文件和发布产物，功能修改不会自动同步到其他项目。
 
-静态输出正文、独立标题描述、canonical、Open Graph、Event/Organization JSON-LD、站点地图和 robots。语义标题、文字展品分类与问答便于检索和机器理解，不能保证搜索排名或AI引用。正式域名为 csce.hm-d.cn。
+## 技术栈
 
-## 发布
+| 技术 | 用途 |
+| --- | --- |
+| Astro 6.4.8 | 文件路由、组件模板、构建时静态生成 |
+| TypeScript、`@astrojs/check` | 数据和 Astro 组件类型检查 |
+| CSS、Tailwind CSS 4.1.17 相关依赖 | 响应式布局与页面样式，实际接入方式见下文 |
+| Vite | Astro 内部开发和构建工具链 |
+| npm、`package-lock.json` | 依赖安装和版本锁定 |
 
-用户已授权发布到118.89.192.96的独立站点csce.hm-d.cn。原站www.hmjncbh.com保持原状；部署脚本见scripts/deploy_server.py，运维记录见docs/服务器部署说明.md。更新前备份本站与Nginx配置，按 docs/旧地址迁移.conf 检查301规则。原文章页不得批量跳转首页；有价值文章后续迁移正文或保持原地址服务。删除空页可使用410，不能全部重定向到无关页面。
+依赖安装以锁文件为准。部分检查工具使用 `latest` 声明，常规安装使用 `npm ci`，升级时单独审查锁文件变更。
 
-## 仓库
+## 开发与构建
 
-- GitHub：https://github.com/Nadiamaxreed/CSCE
-- Gitee：https://gitee.com/nadia20109/csce
-- main为正式源码分支；推送代码与服务器发布分开操作。
-- research为本地采集及截图临时目录，不提交；源码、网站图片、维护与发布文档一并管理。
+使用 Node.js 22.12.0 或更高的兼容版本、npm 9.6.5 或更高版本。在仓库根目录执行：
+
+```bash
+npm ci
+npm run dev
+```
+
+开发与预览的访问入口以终端输出为准，无需固定机器目录或特定端口。
+
+| 命令 | 说明 |
+| --- | --- |
+| `npm run dev` | 启动 Astro 开发服务 |
+| `npm run typecheck` | 检查 Astro 与 TypeScript |
+| `npm run build` | 生成完整静态产物到 `dist/` |
+| `npm run preview` | 预览已构建产物 |
+
+`preview` 不会代替构建。发布文件来自 `dist/`；Node.js 只用于开发与构建，静态托管阶段无需启动 Node.js 应用。
+
+## 页面与业务逻辑
+
+| 路由 | 用途 |
+| --- | --- |
+| `/` | 首页，含参展品牌和合作媒体 |
+| `/about/`、`/categories/` | 展会介绍、问答与展品分类 |
+| `/exhibit/`、`/benefits/` | 参展流程与参展说明 |
+| `/visit/`、`/schedule/`、`/travel/` | 参观、日程、交通与住宿指引 |
+| `/events/`、`/promotion/` | 同期活动与宣传推广 |
+| `/news/`、`/industry/` | 展会资讯与行业动态 |
+| `/archive/[id]/` | 构建时生成的历史资讯正文 |
+| `/review/`、`/brands/`、`/media/` | 往届现场、品牌与合作媒体 |
+| `/contact/`、`/privacy/` | 联系方式与隐私说明 |
+
+静态路由来自 `src/pages/`，统一使用结尾斜杠；`404.astro` 生成自定义错误页。历史文章由 `archive.json` 驱动 `getStaticPaths()` 生成，并标注历史资讯语境。新闻列表保留外部来源链接，外链不会自动成为站内正文。
+
+参观登记统一读取 `event.registration`，应完整保留 URL 参数与哈希片段。本站不收集登记信息，也不制作站内报名或展位申请表单。电话和邮箱仅作文字展示。合作媒体使用数据中的对应网站链接。移动导航和二级菜单由少量浏览器脚本控制，并维护展开状态。
+
+## 目录与内容维护
+
+| 路径 | 职责 |
+| --- | --- |
+| `src/data/event.ts` | 展会基本事实、联系方式、登记入口、展品分类、FAQ 与导航 |
+| `src/data/news.json` | 新闻列表及来源链接 |
+| `src/data/archive.json` | 历史文章正文数据 |
+| `src/data/brands.json`、`media.json` | 品牌和媒体展示数据 |
+| `src/layouts/Base.astro` | 公共导航、页脚、SEO、结构化数据及移动菜单 |
+| `src/layouts/Article.astro` | 内容页面共用布局 |
+| `src/components/Brands.astro`、`Media.astro` | 品牌与媒体区块 |
+| `src/styles/global.css` | 实际使用的全站 CSS 样式 |
+| `public/images/` | 随源码保存的网站图片 |
+| `docs/` | 内容来源、素材来源与维护记录 |
+| `astro.config.mjs`、`tsconfig.json` | 静态输出、集成与严格类型检查配置 |
+
+当前虽声明 Tailwind 相关依赖，但 `astro.config.mjs` 未挂载 Tailwind Vite 插件；页面主要使用自定义 CSS。不要仅凭依赖列表假定工具类已参与构建。
+
+更新展会事实先改 `event.ts`，再检查页面是否存在需同步的标题和正文；更新品牌或媒体应同时核对图片、名称与目标链接。新增历史文章同时维护列表入口和归档数据。图片来源记录见 [图片来源](docs/图片来源.json)。
+
+## SEO 与资源
+
+`Base.astro` 生成标题、描述、canonical、Open Graph 以及 Organization / Event JSON-LD。`@astrojs/sitemap` 在构建时生成站点地图，`public/robots.txt` 提供抓取规则。页脚不展示地图链接不影响机器 sitemap。
+
+站点身份同时来自 `astro.config.mjs` 的 `site` 和 `event.site`；变更时同步核对 canonical、结构化数据、分享图和 robots。图片位于 `public/`，构建时原样复制，不自动压缩，应在入库前控制尺寸和体积。
+
+## 验证
+
+```bash
+npm test
+```
+
+`npm test` 顺序执行类型检查和构建，未包含独立单元测试。重点人工核验参观登记完整跳转、二级菜单、历史文章、品牌和媒体链接及联系方式展示。旧地址迁移规则需要逐页确认，历史文章不应统一跳转到无关首页。
+
+## 发布与协作
+
+1. 核对当前仓库及分支，阅读 [AGENTS.md](AGENTS.md)，同步远程并检查已有变更。
+2. 修改内容、模板或图片，同时维护相关数据引用与来源记录。
+3. 运行类型检查与构建，预览受影响页面，检查桌面及移动端导航、图片、正文和外部入口。
+4. 将经过核验的 `dist/` 内容作为完整版本交给静态 Web 服务托管；保留旧版以便回滚。静态托管应支持目录首页、404 页面及 HTTPS。
+5. 发布后核验关键页面与静态资源。代码推送和网站发布是独立操作，仓库同步不等于完成上线。
+
+GitHub 与 Gitee 保存同一项目的源码，默认分支为 `main`。提交应包含页面所需的数据与素材；`node_modules/`、`dist/`、缓存、临时采集资料及凭据不作为源码提交。密钥、密码、Token 和真实环境配置不得写入文档、源码或提交历史。
+
+## 当前能力与维护边界
+
+- 现有正文随构建输出，可直接被浏览器与搜索引擎读取；搜索收录、排名或 AI 引用效果不由项目保证。
+- 新闻与图集由仓库数据维护，未接入自动公众号同步、在线编辑或实时数据库。
+- 类型检查、构建和静态链接核验不能替代浏览器视觉验收，也不能证明外部服务始终可用。
+- 展会日期、机构名称、规模、价格及历史新闻须有资料支持；历史事实保留原有时间语境。真实照片与概念示意图区分标注。
