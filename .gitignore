@@ -4,3 +4,7 @@ dist/
 .env*
 research/
 *.tar.gz
+
+# Generated checks and retired migration inputs
+.verification/
+旧站归档/
