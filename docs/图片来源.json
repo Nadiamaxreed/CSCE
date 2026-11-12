@@ -51,5 +51,23 @@
     "name": "CSCE JN标识",
     "url": "https://www.hmjncbh.com/uploads/allimg/20261014/102-261014135001610.jpg",
     "use": "原站标识左侧裁剪为页头标识；JN部分裁剪为favicon"
+  },
+  {
+    "name": "/images/feedback-1112-exhibition-71538472d3.webp",
+    "source": "用户桌面《济南展.docx》内嵌image3.jpeg",
+    "size": [
+      1267,
+      792
+    ],
+    "use": "首页往届现场图片，2026-11-12按文档替换"
+  },
+  {
+    "name": "/images/feedback-1112-industry-3ee4a3102a.webp",
+    "source": "用户桌面《济南展.docx》内嵌image4.jpeg",
+    "size": [
+      1269,
+      846
+    ],
+    "use": "首页往届现场图片，2026-11-12按文档替换"
   }
 ]

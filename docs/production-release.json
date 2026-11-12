@@ -1,0 +1,8 @@
+{
+  "domain": "csce.hm-d.cn",
+  "server": "118.89.192.96",
+  "release": "/www/wwwroot/csce.hm-d.cn-releases/20261112T025135Z",
+  "backup": "/root/csce-backups/20261112T025135Z",
+  "archiveSha256": "c2cfd827f15fa37f486d5332ab5e9bca68122816152e97df983a5101603133f3",
+  "archive": "csce-20261112T025135Z.tar.gz"
+}
