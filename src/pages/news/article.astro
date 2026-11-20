@@ -1,0 +1,9 @@
+---
+import Article from '../../layouts/Article.astro';
+---
+<Article title="新闻详情" description="展会新闻与行业资讯。" label="NEWS"><div id="news-detail" role="status">正在加载新闻…</div></Article>
+<script>
+const node=document.querySelector<HTMLElement>('#news-detail')!;const prefix=document.querySelector<HTMLMetaElement>('meta[name="preview-base"]')?.content||'';
+async function load(){try{const id=new URLSearchParams(location.search).get('id')||'';if(!/^[a-f0-9-]{36}$/i.test(id))throw Error();const r=await fetch(prefix+'/api/content-hub/detail/'+encodeURIComponent(id),{cache:'no-store'});if(!r.ok)throw Error();const data=await r.json();node.replaceChildren();const title=document.createElement('h2');title.textContent=data.title;const date=document.createElement('p');date.textContent=data.published_at;node.append(title,date);const parsed=new DOMParser().parseFromString(data.content||'','text/html');parsed.querySelectorAll('script,style,iframe,object,embed,form').forEach(x=>x.remove());for(const source of parsed.body.querySelectorAll('p,h1,h2,h3,h4,li')){const p=document.createElement('p');p.textContent=source.textContent;node.append(p);}if(!parsed.body.textContent?.trim()){const p=document.createElement('p');p.textContent='暂无正文';node.append(p);}}catch{node.textContent='新闻暂时无法加载，请稍后重试。';}}
+load();
+</script>

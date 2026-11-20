@@ -14,6 +14,7 @@ ssh=['ssh','-i',KEY,'-o','BatchMode=yes','-o','ConnectTimeout=15',HOST]
 def remote(script):
  subprocess.run(ssh+['bash','-s'],input=script.replace('\r\n','\n').encode('utf8'),check=True)
 subprocess.run(['scp','-i',KEY,'-o','BatchMode=yes',str(archive),HOST+':/root/'+archive.name],check=True)
+subprocess.run(['scp','-i',KEY,'-o','BatchMode=yes',str(R/'scripts/news_proxy.py'),HOST+':/root/csce-news-proxy.py'],check=True)
 script=r'''set -eu
 STAMP=__STAMP__
 DOMAIN=csce.hm-d.cn
@@ -25,6 +26,34 @@ mkdir -p "$BACKUP" "$RELEASE" /www/wwwroot/csce-acme
 sha256sum /www/server/panel/vhost/nginx/jnxz.hm-d.cn.conf /www/server/panel/vhost/nginx/syxz.hm-d.cn.conf /www/server/panel/vhost/nginx/ts.hm-d.cn.conf /www/server/panel/vhost/nginx/t.hm-d.cn.conf > "$BACKUP/other-sites.sha256"
 [ ! -e "$CONF" ] || cp -a "$CONF" "$BACKUP/nginx.conf"
 if [ -L "$ROOT" ]; then cp -a "$ROOT" "$BACKUP/site-entry"; elif [ -e "$ROOT" ]; then echo 'Existing site root is not a symlink; preserve and inspect it first.'; exit 1; fi
+# Service credentials are provisioned separately and never included in dist.
+if [ ! -f /etc/csce-news.env ]; then
+ test -f /etc/csce-news-preview.env
+ install -m 600 /etc/csce-news-preview.env /etc/csce-news.env
+fi
+install -m 644 /root/csce-news-proxy.py /opt/csce-news-proxy.py
+cat > /etc/systemd/system/csce-news.service <<'UNIT'
+[Unit]
+Description=CSCE read-only content hub news API
+After=network-online.target
+[Service]
+DynamicUser=yes
+EnvironmentFile=/etc/csce-news.env
+ExecStart=/usr/bin/python3 /opt/csce-news-proxy.py
+Restart=on-failure
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+MemoryMax=128M
+[Install]
+WantedBy=multi-user.target
+UNIT
+systemctl daemon-reload
+systemctl disable --now csce-news-preview.service 2>/dev/null || true
+systemctl enable --now csce-news.service
+systemctl restart csce-news.service
+systemctl is-active csce-news.service
 printf '%s  %s\n' '__SHA__' '/root/__ARCHIVE__' | sha256sum -c -
 tar -xzf /root/__ARCHIVE__ -C "$RELEASE"
 test -s "$RELEASE/index.html"
@@ -72,6 +101,26 @@ server {
  gzip on;
  gzip_types text/css application/javascript application/json image/svg+xml;
  location ^~ /.well-known/acme-challenge/ { root /www/wwwroot/csce-acme; default_type text/plain; try_files $uri =404; }
+ location ^~ /api/content-hub/ {
+  proxy_pass http://127.0.0.1:18726/;
+  proxy_read_timeout 65s;
+  proxy_buffering off;
+  add_header Cache-Control 'no-store' always;
+ }
+ location ^~ /__preview/news-36a7eb7aa7/api/content-hub/ {
+  proxy_pass http://127.0.0.1:18726/;
+  proxy_read_timeout 65s;
+  proxy_buffering off;
+  add_header Cache-Control 'no-store' always;
+  add_header X-Robots-Tag 'noindex, nofollow' always;
+ }
+ location ^~ /__preview/news-36a7eb7aa7/ {
+  root /www/wwwroot/csce-preview-web;
+  index index.html;
+  try_files $uri $uri/ =404;
+  add_header Cache-Control 'no-store' always;
+  add_header X-Robots-Tag 'noindex, nofollow' always;
+ }
  location / { try_files $uri $uri/ =404; }
  location ^~ /_astro/ { expires 1y; add_header Cache-Control 'public, immutable'; try_files $uri =404; }
  location ^~ /media/optimized/ { expires 7d; add_header Cache-Control 'public'; try_files $uri =404; }

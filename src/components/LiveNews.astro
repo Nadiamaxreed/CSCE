@@ -1,0 +1,44 @@
+---
+interface Props {compact?:boolean;}
+const {compact=false}=Astro.props;
+---
+<div class="live-news" data-live-news data-compact={String(compact)}><div class="news-tabs live-news-tabs" aria-label="新闻分类" hidden></div><p class="live-news-status" role="status">正在加载新闻…</p><div class:list={[compact?'home-news-list':'news-list','live-news-items']}></div><div class="live-news-pagination" role="navigation" aria-label="新闻分页" hidden></div><button class="button green-button live-news-retry" type="button" hidden>重新加载</button></div>
+<script>
+const prefix=document.querySelector<HTMLMetaElement>('meta[name="preview-base"]')?.content || '';
+const safeURL=(value:string)=>{try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)?u.href:'';}catch{return '';}};
+interface Item {uuid:string;title:string;published_at:string;external_url:string;digest:string;categories?:{name:string}[];}
+async function loadNews(root:HTMLElement){
+ const tabs=root.querySelector<HTMLElement>('.live-news-tabs')!;const list=root.querySelector<HTMLElement>('.live-news-items')!;const status=root.querySelector<HTMLElement>('.live-news-status')!;const retry=root.querySelector<HTMLButtonElement>('.live-news-retry')!;const compact=root.dataset.compact==='true';const pagination=root.querySelector<HTMLElement>('.live-news-pagination')!;
+ status.textContent='正在加载新闻…';retry.hidden=true;pagination.hidden=true;pagination.replaceChildren();list.replaceChildren();tabs.replaceChildren();tabs.hidden=true;
+ try{
+  const response=await fetch(prefix+'/api/content-hub/feed',{cache:'no-store',signal:AbortSignal.timeout(60000)});if(!response.ok)throw Error('request failed');
+  const data=await response.json();if(!Array.isArray(data.items)||!Array.isArray(data.categories))throw Error('invalid data');
+  const items:Item[]=data.items;const names=[...new Set<string>(data.categories.map((x:{name:string})=>x.name).filter(Boolean))];for(const item of items)for(const c of item.categories||[])if(c.name&&!names.includes(c.name))names.push(c.name);
+  function render(category='',page=1){
+   const visible=items.filter(x=>!category||(x.categories||[]).some(c=>c.name===category));list.replaceChildren();status.textContent=visible.length?'':'暂无新闻';
+   const totalPages=Math.max(1,Math.ceil(visible.length/10));const currentPage=Math.min(Math.max(1,page),totalPages);
+   const pageItems=compact?visible.slice(0,4):visible.slice((currentPage-1)*10,currentPage*10);
+   for(const item of pageItems){
+    const a=document.createElement('a');a.className=compact?'home-news-item':'live-news-row';a.href=safeURL(item.external_url)||prefix+'/news/article/?id='+encodeURIComponent(item.uuid);if(safeURL(item.external_url)){a.target='_blank';a.rel='noopener noreferrer';}
+    const time=document.createElement('time');time.dateTime=item.published_at;time.textContent=item.published_at?.replaceAll('-','.');
+    const title=document.createElement(compact?'h3':'h2');title.textContent=item.title;
+    const arrow=document.createElement('span');arrow.textContent='↗';arrow.className='home-news-arrow';arrow.setAttribute('aria-hidden','true');a.append(time,title,arrow);list.append(a);
+   }
+   pagination.replaceChildren();pagination.hidden=compact||!visible.length;
+   if(!compact&&visible.length){
+    const summary=document.createElement('span');summary.className='pagination-summary';summary.textContent=`共 ${visible.length} 条 · 第 ${currentPage} / ${totalPages} 页`;pagination.append(summary);
+    function pageButton(label:string,target:number,disabled=false){const button=document.createElement('button');button.type='button';button.textContent=label;button.disabled=disabled;if(label===String(currentPage))button.setAttribute('aria-current','page');button.addEventListener('click',()=>{render(category,target);root.scrollIntoView({block:'start'});});pagination.append(button);}
+    pageButton('上一页',currentPage-1,currentPage===1);
+    const pages=new Set([1,totalPages,currentPage-1,currentPage,currentPage+1]);let previous=0;
+    for(const n of [...pages].filter(n=>n>=1&&n<=totalPages).sort((a,b)=>a-b)){if(previous&&n-previous>1){const dots=document.createElement('span');dots.textContent='…';pagination.append(dots);}pageButton(String(n),n);previous=n;}
+    pageButton('下一页',currentPage+1,currentPage===totalPages);
+   }
+  }
+  if(!compact){tabs.hidden=false;for(const name of ['',...names]){const button=document.createElement('button');button.type='button';button.textContent=name||'全部';button.setAttribute('aria-pressed',String(!name));button.addEventListener('click',()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===button)));render(name);});tabs.append(button);}}
+  render();
+ }catch{status.textContent='新闻暂时无法加载，请重试。';retry.hidden=false;}
+ retry.onclick=()=>loadNews(root);
+}
+function refresh(){document.querySelectorAll<HTMLElement>('[data-live-news]').forEach(loadNews);}
+refresh();window.addEventListener('pageshow',event=>{if(event.persisted)refresh();});
+</script>

@@ -22,7 +22,7 @@ export const nav = [
  {label:'关于展会',href:'/about/',children:[['/about/','展会概况'],['/categories/','参展范围'],['/benefits/','展会优势'],['/brands/','参展品牌'],['/review/','往届回顾']]},
  {label:'展商服务',href:'/exhibit/',children:[['/exhibit/','参展流程'],['/schedule/','展会日程'],['/exhibit/#booking','展位预订'],['/exhibit/#fees','参展费用'],['/promotion/','宣传推广']]},
  {label:'观众服务',href:'/visit/',children:[[event.registration,'参观登记'],['/visit/','参观指南'],['/brands/','品牌展示'],['/travel/','交通指南'],['/travel/#hotels','周边住宿']]},
- {label:'新闻中心',href:'/news/',children:[['/news/','展会新闻'],['/industry/','行业动态'],['/review/','展会相册'],['/media/','合作媒体']]},
+ {label:'新闻中心',href:'/news/',children:[['/news/','全部新闻'],['/review/','展会相册'],['/media/','合作媒体']]},
  {label:'同期活动',href:'/events/',children:[]},
 ];
 export const faqs = [
