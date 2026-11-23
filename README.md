@@ -126,3 +126,9 @@ GitHub 与 Gitee 保存同一项目的源码，默认分支为 `main`。提交�
 ## 新闻接口
 
 2026-11-20起新闻与分类由内容中台实时获取，不再通过本地news.json维护首页和新闻列表。每次打开新闻页重新请求；未分类归入全部，每页10条、分类切换重置页码。具体服务、凭据和发布步骤见docs/服务器部署说明.md。后端仅服务端持有凭据，网站前端不包含Token。历史archive内容与旧news.json仅保留迁移资料，不作为当前新闻数据源。
+
+## SEO 与 GEO（2026-11-23）
+
+首页问答与 FAQPage 共用数据；公共 SeoHead 维护站点、页面及面包屑结构化数据和分享信息。企业站新增业务问答、Organization 与静态新闻 NewsArticle，站点地图改为构建后自动生成；本节替代早期关于未接入结构化数据、手工 sitemap 的描述。404 和实时新闻详情壳页不索引。
+
+修改后执行 `npm run typecheck`、`npm run build` 和 `python scripts/verify_seo.py`。验证范围、维护位置和功能边界见 [SEO 与 GEO 说明](docs/SEO与GEO说明.md)。静态可读内容与真实业务事实是优化基础，不保证排名、AI 引用或 FAQ 富结果。
